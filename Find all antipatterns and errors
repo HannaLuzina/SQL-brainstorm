@@ -42,7 +42,7 @@ USING orders_final AS src
 WHEN MATCHED AND src.row_hash <> tgt.row_hash
 	THEN UPDATE
 		  SET tgt.order_created_date = src.order_created_date
-					, tgt.dim_orders_id = src.dim_orders_id
+			    , tgt.dim_orders_id = src.dim_orders_id
 			    , tgt.dim_customer_id = src.dim_customer_id
 			    , tgt.dim_product_id = src.dim_product_id
 			    , tgt.snapshot_date = src.snapshot_date
@@ -54,7 +54,7 @@ WHEN MATCHED AND src.row_hash <> tgt.row_hash
 WHEN NOT MATCHED BY TARGET
 	THEN INSERT (order_id
 			           , order_created_date
-					       , dim_orders_id
+				   , dim_orders_id
 			           , dim_customer_id
 			           , dim_product_id
 			           , snapshot_date
