@@ -12,7 +12,7 @@ WITH orders AS (
     FROM staging.orders AS so
     INNER JOIN dm_sales.dim_orders AS do ON so.order_id = do.order_id
     INNER JOIN dm_common.dim_customer_sdc2 AS dc ON so.customer_id = dc.customer_id 
-  AND so.order_created_date BETWEEN dc.record_start_date AND dc.record_end_date
+	  AND so.order_created_date BETWEEN dc.record_start_date AND dc.record_end_date
     INNER JOIN dm_common.dim_product AS dp ON dp.product_id = sd.product_id
     WHERE so.order_created_date >= DATEADD(MONTH, - 3, GETDATE()))
   , billing AS (
@@ -35,7 +35,7 @@ WITH orders AS (
   		, COALESCE(billing.billing_number, 0)))) AS row_hash
     FROM orders
     LEFT JOIN billing ON orders.sap_order_id = billing.sap_order_id 
-  AND billing.rn = 1)
+         AND billing.rn = 1)
 MERGE INTO dm_sales.fact_orders AS tgt
 USING orders_final AS src
 	ON tgt.order_id = src.order_id AND tgt.snapshot_date = src.snapshot_date
